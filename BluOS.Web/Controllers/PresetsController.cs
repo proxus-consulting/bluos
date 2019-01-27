@@ -12,11 +12,16 @@ namespace BluOS.Web.Controllers
         {
         }
 
-        [HttpGet]
+        [HttpGet("Presets")]
         public async Task Get()
         {
             await WriteXMLResponse(await BluOSService.GetStringAsync("Presets"));
         }
 
+        [HttpGet("Play/{id}")]
+        public async Task Play(int id)
+        {
+            await WriteXMLResponse(await BluOSService.GetStringAsync($"Preset?id={id}"));
+        }
     }
 }
