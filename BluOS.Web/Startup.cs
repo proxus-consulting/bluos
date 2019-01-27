@@ -1,16 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using Swashbuckle.AspNetCore.Swagger;
+using System;
 
 namespace BluOS.Web
 {
@@ -36,7 +30,22 @@ namespace BluOS.Web
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new Info { Title = "My API", Version = "v1" });
+                c.SwaggerDoc("v1", new Info
+                {
+                    Version = "v1",
+                    Title = "BluOS API",
+                    Description = "An ASP.NET Core Web API with Swagger on top to provide easy access to BlueSound's BluOS interface.",
+                    Contact = new Contact
+                    {
+                        Name = "Proxus",
+                        Email = "info@proxus.dk",
+                        Url = "https://proxus.dk"
+                    },
+                    License = new License
+                    {
+                        Name = "Use under MIT License"
+                    }
+                });
             });
         }
 
@@ -56,7 +65,7 @@ namespace BluOS.Web
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "BluOS API V1");
                 c.RoutePrefix = string.Empty;
             });
 
