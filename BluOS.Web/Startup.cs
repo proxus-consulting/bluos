@@ -26,8 +26,14 @@ namespace BluOS.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddHttpClient("BluOS", client =>
+            {
+                client.BaseAddress = new Uri(Configuration.GetValue<string>("BluOSBaseUrl"));
+                client.DefaultRequestHeaders.Add("User-Agent", "BluOS.Swagger");
+                client.DefaultRequestHeaders.Add("Accept-Encoding", "gzip");
+            });
 
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new Info { Title = "My API", Version = "v1" });
